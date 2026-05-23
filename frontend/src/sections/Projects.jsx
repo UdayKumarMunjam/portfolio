@@ -102,7 +102,7 @@ function Projects() {
     try {
 
       const res = await axios.get(
-        "http://localhost:5000/api/projects"
+        "https://portfolio-backend-gy6d.onrender.com/api/projects"
       );
 
       if (res.data.length > 0) {

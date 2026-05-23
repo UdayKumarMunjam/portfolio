@@ -40,7 +40,7 @@ function Contact() {
       setLoading(true);
 
       await axios.post(
-        "http://localhost:5000/api/contact",
+        "https://portfolio-backend-gy6d.onrender.com/api/contact",
         formData
       );
 
