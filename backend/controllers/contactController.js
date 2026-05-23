@@ -6,70 +6,105 @@ export const sendMessage = async (req, res) => {
 
   try {
 
-    const { name, email, message } = req.body;
-
-    // SAVE TO DATABASE
-
-    const newMessage = new Contact({
+    const {
       name,
       email,
       message,
+    } = req.body;
+
+    // SAVE MESSAGE TO DATABASE
+
+    const newMessage = new Contact({
+
+      name,
+      email,
+      message,
+
     });
 
     await newMessage.save();
 
-    // NODEMAILER TRANSPORTER
+    // GMAIL SMTP CONFIGURATION
 
-    const transporter = nodemailer.createTransport({
+    const transporter =
+      nodemailer.createTransport({
 
-      service: "gmail",
+        host: "smtp.gmail.com",
 
-      auth: {
+        port: 587,
 
-        user: process.env.EMAIL_USER,
+        secure: false,
 
-        pass: process.env.EMAIL_PASS,
+        auth: {
 
-      },
+          user: process.env.EMAIL_USER,
 
-    });
+          pass: process.env.EMAIL_PASS,
+
+        },
+
+      });
 
     // SEND EMAIL
 
     await transporter.sendMail({
 
-      from: process.env.EMAIL_USER,
+      from: process.env.EMAIL_FROM,
 
       to: process.env.EMAIL_USER,
 
-      subject: `New Portfolio Message From ${name}`,
+      subject:
+        `New Portfolio Message From ${name}`,
 
       html: `
-        <h2>New Portfolio Contact Message</h2>
 
-        <p><strong>Name:</strong> ${name}</p>
+        <div style="font-family: Arial; padding: 20px;">
 
-        <p><strong>Email:</strong> ${email}</p>
+          <h2>
+            New Portfolio Contact Message
+          </h2>
 
-        <p><strong>Message:</strong></p>
+          <p>
+            <strong>Name:</strong>
+            ${name}
+          </p>
 
-        <p>${message}</p>
+          <p>
+            <strong>Email:</strong>
+            ${email}
+          </p>
+
+          <p>
+            <strong>Message:</strong>
+          </p>
+
+          <p>
+            ${message}
+          </p>
+
+        </div>
+
       `,
+
     });
 
-    res.status(201).json({
+    return res.status(200).json({
 
       success: true,
 
-      message: "Message Sent Successfully",
+      message:
+        "Message Sent Successfully",
 
     });
 
   } catch (error) {
 
-    console.log(error);
+    console.log(
+      "EMAIL ERROR:",
+      error
+    );
 
-    res.status(500).json({
+    return res.status(500).json({
 
       success: false,
 
