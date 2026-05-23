@@ -66,25 +66,26 @@ function Projects() {
     },
 
     {
-      _id: 3,
+  _id: 3,
 
-      title: "Suraksha+",
+  title: "Suraksha+",
 
-      description:
-        "Women safety application featuring SOS alerts, GPS tracking, emergency services, and secure authentication.",
+  description:
+    "Women safety mobile application developed using Flutter featuring SOS alerts, live GPS tracking, emergency contacts, Firebase authentication, and real-time safety support services.",
 
-      tech: [
-        "React Native",
-        "Firebase",
-        "GPS",
-      ],
+  tech: [
+    "Flutter",
+    "Firebase",
+    "GPS",
+    "Authentication",
+  ],
 
-      image: "/projects/suraksha+.png",
+  image: "/projects/suraksha+.png",
 
-      github: "#",
+  github: "#",
 
-      live: "#",
-    },
+  live: "#",
+},
 
   ];
 
