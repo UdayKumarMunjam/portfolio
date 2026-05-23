@@ -11,9 +11,11 @@ import {
 function Contact() {
 
   const [formData, setFormData] = useState({
+
     name: "",
     email: "",
     message: "",
+
   });
 
   const [loading, setLoading] = useState(false);
@@ -23,8 +25,11 @@ function Contact() {
   const handleChange = (e) => {
 
     setFormData({
+
       ...formData,
+
       [e.target.name]: e.target.value,
+
     });
 
   };
@@ -39,24 +44,37 @@ function Contact() {
 
       setLoading(true);
 
-      await axios.post(
+      const res = await axios.post(
+
         "https://portfolio-backend-gy6d.onrender.com/api/contact",
+
         formData
+
       );
 
-      alert("Message Sent Successfully");
+      alert(res.data.message);
 
       setFormData({
+
         name: "",
         email: "",
         message: "",
-      });
 
-      setLoading(false);
+      });
 
     } catch (error) {
 
       console.log(error);
+
+      alert(
+
+        error.response?.data?.message ||
+
+        "Failed To Send Message"
+
+      );
+
+    } finally {
 
       setLoading(false);
 
@@ -65,6 +83,7 @@ function Contact() {
   };
 
   return (
+
     <section
       id="contact"
       className="bg-black py-28 px-6 md:px-8"
@@ -85,8 +104,11 @@ function Contact() {
           <h2 className="text-5xl md:text-6xl font-extrabold leading-tight mb-10">
 
             Let's Build
+
             <span className="text-cyan-400">
+
               {" "}Something Great
+
             </span>
 
           </h2>
@@ -116,11 +138,15 @@ function Contact() {
               <div>
 
                 <h3 className="text-2xl font-semibold mb-1">
+
                   Email
+
                 </h3>
 
                 <p className="text-gray-400">
+
                   munjamudaykumar@gmail.com
+
                 </p>
 
               </div>
@@ -140,11 +166,15 @@ function Contact() {
               <div>
 
                 <h3 className="text-2xl font-semibold mb-1">
+
                   Phone
+
                 </h3>
 
                 <p className="text-gray-400">
+
                   +91 9110328463
+
                 </p>
 
               </div>
@@ -164,11 +194,15 @@ function Contact() {
               <div>
 
                 <h3 className="text-2xl font-semibold mb-1">
+
                   Location
+
                 </h3>
 
                 <p className="text-gray-400">
+
                   Telangana, India
+
                 </p>
 
               </div>
@@ -258,7 +292,21 @@ function Contact() {
 
             <button
               type="submit"
-              className="w-full bg-cyan-500 hover:bg-cyan-600 py-5 rounded-2xl text-lg font-semibold transition duration-300 shadow-lg shadow-cyan-500/20"
+              disabled={loading}
+              className="
+              w-full
+              bg-cyan-500
+              hover:bg-cyan-600
+              disabled:opacity-70
+              py-5
+              rounded-2xl
+              text-lg
+              font-semibold
+              transition
+              duration-300
+              shadow-lg
+              shadow-cyan-500/20
+              "
             >
 
               {loading ? "Sending..." : "Send Message"}
@@ -272,7 +320,9 @@ function Contact() {
       </div>
 
     </section>
+
   );
+
 }
 
 export default Contact;
