@@ -43,7 +43,19 @@ export const sendMessage = async (req, res) => {
 
         },
 
+        tls: {
+
+          rejectUnauthorized: false,
+
+        },
+
+        connectionTimeout: 10000,
+
       });
+
+    // VERIFY SMTP CONNECTION
+
+    await transporter.verify();
 
     // SEND EMAIL
 
@@ -108,7 +120,9 @@ export const sendMessage = async (req, res) => {
 
       success: false,
 
-      message: error.message,
+      message:
+        error.message ||
+        "Failed To Send Message",
 
     });
 
