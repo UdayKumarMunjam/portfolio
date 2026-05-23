@@ -24,12 +24,12 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    // GMAIL SMTP CONFIGURATION
+    // BREVO SMTP CONFIGURATION
 
     const transporter =
       nodemailer.createTransport({
 
-        host: "smtp.gmail.com",
+        host: "smtp-relay.brevo.com",
 
         port: 587,
 
@@ -43,19 +43,7 @@ export const sendMessage = async (req, res) => {
 
         },
 
-        tls: {
-
-          rejectUnauthorized: false,
-
-        },
-
-        connectionTimeout: 10000,
-
       });
-
-    // VERIFY SMTP CONNECTION
-
-    await transporter.verify();
 
     // SEND EMAIL
 
@@ -63,7 +51,7 @@ export const sendMessage = async (req, res) => {
 
       from: process.env.EMAIL_FROM,
 
-      to: process.env.EMAIL_USER,
+      to: process.env.EMAIL_FROM,
 
       subject:
         `New Portfolio Message From ${name}`,
