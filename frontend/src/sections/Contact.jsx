@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import emailjs from "@emailjs/browser";
 
+import toast from "react-hot-toast";
+
 import {
   FaEnvelope,
   FaPhone,
@@ -44,27 +46,43 @@ function Contact() {
 
       setLoading(true);
 
-      await emailjs.send(
+      await Promise.race([
 
-        "service_cfdsigz",
+        emailjs.send(
 
-        "template_aqlfgzp",
+          "service_cfdsigz",
 
-        {
+          "template_aqlfgzp",
 
-          name: formData.name,
+          {
 
-          email: formData.email,
+            name: formData.name,
 
-          message: formData.message,
+            email: formData.email,
 
-        },
+            message: formData.message,
 
-        "rrA0bj7cxzjC0vTYP"
+          },
 
-      );
+          "rrA0bj7cxzjC0vTYP"
 
-      alert("Message Sent Successfully");
+        ),
+
+        new Promise((_, reject) =>
+
+          setTimeout(
+
+            () => reject(new Error("Request Timeout")),
+
+            10000
+
+          )
+
+        ),
+
+      ]);
+
+      toast.success("Message Sent Successfully");
 
       setFormData({
 
@@ -78,7 +96,7 @@ function Contact() {
 
       console.log(error);
 
-      alert("Failed To Send Message");
+      toast.error(error.message);
 
     } finally {
 
