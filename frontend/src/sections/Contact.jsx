@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import axios from "axios";
+import emailjs from "@emailjs/browser";
 
 import {
   FaEnvelope,
@@ -44,15 +44,27 @@ function Contact() {
 
       setLoading(true);
 
-      const res = await axios.post(
+      await emailjs.send(
 
-        "https://portfolio-backend-gy6d.onrender.com/api/contact",
+        "service_cfdsigz",
 
-        formData
+        "template_aqlfgzp",
+
+        {
+
+          name: formData.name,
+
+          email: formData.email,
+
+          message: formData.message,
+
+        },
+
+        "rrA0bj7cxzjC0vTYP"
 
       );
 
-      alert(res.data.message);
+      alert("Message Sent Successfully");
 
       setFormData({
 
@@ -66,13 +78,7 @@ function Contact() {
 
       console.log(error);
 
-      alert(
-
-        error.response?.data?.message ||
-
-        "Failed To Send Message"
-
-      );
+      alert("Failed To Send Message");
 
     } finally {
 
